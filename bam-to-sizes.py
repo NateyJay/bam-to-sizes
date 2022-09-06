@@ -69,11 +69,13 @@ for i, line in enumerate(samtools(file)):
 	flag = int(line[1])
 	rg   = line[rg_i][5:]
 
-	rgs.add(rg)
-	sizes.add(size)
+	if flag != 4:
 
-	key= f"{size}_{rg}"
-	c.update([key])
+		rgs.add(rg)
+		sizes.add(size)
+
+		key= f"{size}_{rg}"
+		c.update([key])
 
 
 sizes = sorted(list(sizes))
