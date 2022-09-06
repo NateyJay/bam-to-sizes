@@ -30,7 +30,7 @@ output_file = args.output_file
 
 def samtools(file):
 
-	samtools = Popen(["samtools", "view", "-@", "4", file], stdout=PIPE, stderr=PIPE, universal_newlines=True)
+	samtools = Popen(["samtools", "view", "-@", "4", "-F", "4", file], stdout=PIPE, stderr=PIPE, universal_newlines=True)
 	
 	for stdout_line in iter(samtools.stdout.readline, ""):
 		yield stdout_line 
@@ -69,13 +69,11 @@ for i, line in enumerate(samtools(file)):
 	flag = int(line[1])
 	rg   = line[rg_i][5:]
 
-	if flag != 4:
+	rgs.add(rg)
+	sizes.add(size)
 
-		rgs.add(rg)
-		sizes.add(size)
-
-		key= f"{size}_{rg}"
-		c.update([key])
+	key= f"{size}_{rg}"
+	c.update([key])
 
 
 sizes = sorted(list(sizes))
